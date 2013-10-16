@@ -8,8 +8,8 @@
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	self.viewController = [[DemoViewController alloc] initWithNibName:@"DemoViewController" bundle:nil];
-	self.window.rootViewController = self.viewController;
+	DemoViewController *viewController = [[DemoViewController alloc] initWithNibName:@"DemoViewController" bundle:nil];
+	self.window.rootViewController = viewController;
 	[self.window makeKeyAndVisible];
 	return YES;
 }

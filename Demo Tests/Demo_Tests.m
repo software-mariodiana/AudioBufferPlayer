@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "DemoAppDelegate.h"
 
 
 @interface Demo_Tests : XCTestCase
@@ -31,6 +32,12 @@
 {
     id appDelegate = [[UIApplication sharedApplication] delegate];
     XCTAssertNotNil(appDelegate, @"Application delegate should not be nil.");
+}
+
+- (void)testApplicationDelegateShouldBeInstanceOfAppropriateClass
+{
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate isKindOfClass:[DemoAppDelegate class]];
 }
 
 @end

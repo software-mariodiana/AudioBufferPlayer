@@ -24,6 +24,10 @@
 		AC1E8F34180E1FED00CC8BB7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC1E8F32180E1FED00CC8BB7 /* InfoPlist.strings */; };
 		AC1E8F36180E1FED00CC8BB7 /* Demo_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1E8F35180E1FED00CC8BB7 /* Demo_Tests.m */; };
 		AC8AAEBE180DF72200D82DC4 /* Project URL.txt in Resources */ = {isa = PBXBuildFile; fileRef = AC8AAEBD180DF72200D82DC4 /* Project URL.txt */; };
+		ACB15320180E276C00A691D7 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82409A16849854008016E0 /* DemoViewController.m */; };
+		ACB15321180E276F00A691D7 /* Synth.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82409F16849854008016E0 /* Synth.m */; };
+		ACB15322180E277100A691D7 /* MHAudioBufferPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8240AA1684987D008016E0 /* MHAudioBufferPlayer.m */; };
+		ACB15323180E27F300A691D7 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82409816849854008016E0 /* DemoAppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,7 +293,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACB15321180E276F00A691D7 /* Synth.m in Sources */,
+				ACB15323180E27F300A691D7 /* DemoAppDelegate.m in Sources */,
 				AC1E8F36180E1FED00CC8BB7 /* Demo_Tests.m in Sources */,
+				ACB15322180E277100A691D7 /* MHAudioBufferPlayer.m in Sources */,
+				ACB15320180E276C00A691D7 /* DemoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +500,7 @@
 				AC1E8F3C180E1FED00CC8BB7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Demo" */ = {
 			isa = XCConfigurationList;
