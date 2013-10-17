@@ -6,10 +6,10 @@
 //
 // https://developer.apple.com/library/ios/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Cookbook/Cookbook.html
 //
-// We replace the deprecated methods from the C implemenation, replacing
-// them with the newer, Objective-C implementation.
+// We replace the C implementation methods that were deprecated in iOS 7,
+// replacing them with the newer, Objective-C implementation.
 //
-// 2013.10.16 - M.D.
+// 2013.10.16 - Mario Diana <software@mariodiana.com>
 //
 
 // The number of Audio Queue buffers we keep in rotation
@@ -51,12 +51,21 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
 	UInt32 _bytesPerBuffer;
 }
 
-- (id)initWithSampleRate:(Float64)sampleRate channels:(UInt32)channels bitsPerChannel:(UInt32)bitsPerChannel secondsPerBuffer:(Float64)secondsPerBuffer
+- (id)initWithSampleRate:(Float64)sampleRate
+                channels:(UInt32)channels
+          bitsPerChannel:(UInt32)bitsPerChannel
+        secondsPerBuffer:(Float64)secondsPerBuffer
 {
-	return [self initWithSampleRate:sampleRate channels:channels bitsPerChannel:bitsPerChannel packetsPerBuffer:(UInt32)(secondsPerBuffer * sampleRate)];
+	return [self initWithSampleRate:sampleRate
+                           channels:channels
+                     bitsPerChannel:bitsPerChannel
+                   packetsPerBuffer:(UInt32)(secondsPerBuffer * sampleRate)];
 }
 
-- (id)initWithSampleRate:(Float64)sampleRate channels:(UInt32)channels bitsPerChannel:(UInt32)bitsPerChannel packetsPerBuffer:(UInt32)packetsPerBuffer
+- (id)initWithSampleRate:(Float64)sampleRate
+                channels:(UInt32)channels
+          bitsPerChannel:(UInt32)bitsPerChannel
+        packetsPerBuffer:(UInt32)packetsPerBuffer
 {
 	if ((self = [super init]))
 	{
@@ -124,7 +133,8 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
     
     success = [session setActive:YES error:&error];
     if (!success) {
-        NSLog(@"%@", [error localizedDescription]);
+        NSLog(@"%@ Error activating %@",
+              NSStringFromSelector(_cmd), [error localizedDescription]);
     }
     
     return success;
@@ -135,7 +145,8 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
     NSError *deactivationError = nil;
     BOOL success = [[AVAudioSession sharedInstance] setActive:NO error:&deactivationError];
     if (!success) {
-        NSLog(@"%@", [deactivationError localizedDescription]);
+        NSLog(@"%@ Error deactivating %@",
+              NSStringFromSelector(_cmd), [deactivationError localizedDescription]);
     }
     return success;
 }
