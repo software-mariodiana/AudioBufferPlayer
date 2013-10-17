@@ -79,6 +79,8 @@
 			[blockSelf->_synthLock unlock];
 		}
 	};
+    
+    [[AVAudioSession sharedInstance] setDelegate:_player];
 
 	[_player start];
 }

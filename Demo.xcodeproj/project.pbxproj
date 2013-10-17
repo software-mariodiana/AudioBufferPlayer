@@ -24,6 +24,7 @@
 		AC1E8F34180E1FED00CC8BB7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC1E8F32180E1FED00CC8BB7 /* InfoPlist.strings */; };
 		AC1E8F36180E1FED00CC8BB7 /* Demo_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1E8F35180E1FED00CC8BB7 /* Demo_Tests.m */; };
 		AC8AAEBE180DF72200D82DC4 /* Project URL.txt in Resources */ = {isa = PBXBuildFile; fileRef = AC8AAEBD180DF72200D82DC4 /* Project URL.txt */; };
+		AC8B2422180F549700D29386 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B2421180F549700D29386 /* AVFoundation.framework */; };
 		ACB15320180E276C00A691D7 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82409A16849854008016E0 /* DemoViewController.m */; };
 		ACB15321180E276F00A691D7 /* Synth.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82409F16849854008016E0 /* Synth.m */; };
 		ACB15322180E277100A691D7 /* MHAudioBufferPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B8240AA1684987D008016E0 /* MHAudioBufferPlayer.m */; };
@@ -66,6 +67,7 @@
 		AC1E8F35180E1FED00CC8BB7 /* Demo_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_Tests.m; sourceTree = "<group>"; };
 		AC1E8F37180E1FED00CC8BB7 /* Demo Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo Tests-Prefix.pch"; sourceTree = "<group>"; };
 		AC8AAEBD180DF72200D82DC4 /* Project URL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Project URL.txt"; sourceTree = "<group>"; };
+		AC8B2421180F549700D29386 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		ACE7A95F180E146800C51258 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -74,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC8B2422180F549700D29386 /* AVFoundation.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				7BB582BA120F0D0400271D23 /* AudioToolbox.framework in Frameworks */,
@@ -118,6 +121,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AC8B2421180F549700D29386 /* AVFoundation.framework */,
 				7BB582B9120F0D0400271D23 /* AudioToolbox.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,

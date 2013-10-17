@@ -1,5 +1,6 @@
 
 #import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVAudioSession.h>
 
 @class MHAudioBufferPlayer;
 
@@ -44,7 +45,7 @@ typedef void (^MHAudioBufferPlayerBlock)(AudioQueueBufferRef buffer, AudioStream
  * Note: The buffers are always assumed to be little-endian (both on simulator
  * and on a device).
  */
-@interface MHAudioBufferPlayer : NSObject
+@interface MHAudioBufferPlayer : NSObject <AVAudioSessionDelegate>
 
 /* The block that fills up the audio buffers. */
 @property (nonatomic, copy) MHAudioBufferPlayerBlock block;

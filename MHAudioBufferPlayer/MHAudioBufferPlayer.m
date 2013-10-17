@@ -1,6 +1,17 @@
 
 #import "MHAudioBufferPlayer.h"
 
+//
+// "Audio Session Cookbook" from the Audio Session Programming Guide
+//
+// https://developer.apple.com/library/ios/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Cookbook/Cookbook.html
+//
+// We replace the deprecated methods from the C implemenation, replacing
+// them with the newer, Objective-C implementation.
+//
+// 2013.10.16 - M.D.
+//
+
 // The number of Audio Queue buffers we keep in rotation
 #define NumberOfAudioDataBuffers 3
 
@@ -14,19 +25,6 @@
 
 @end
 
-static void InterruptionListenerCallback(void *inUserData, UInt32 interruptionState)
-{
-	MHAudioBufferPlayer *player = (__bridge MHAudioBufferPlayer *)inUserData;
-	if (interruptionState == kAudioSessionBeginInterruption)
-	{
-		[player tearDownAudio];
-	}
-	else if (interruptionState == kAudioSessionEndInterruption)
-	{
-		[player setUpAudio];
-		[player start];
-	}
-}
 
 static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueueBufferRef inBuffer)
 {
@@ -108,26 +106,38 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
 	}
 }
 
-- (void)setUpAudioSession
+- (BOOL)setUpAudioSession
 {
-	AudioSessionInitialize(
-		NULL,
-		NULL,
-		InterruptionListenerCallback,
-		(__bridge void *)self);
-
-	UInt32 sessionCategory = kAudioSessionCategory_MediaPlayback;
-	AudioSessionSetProperty(
-		kAudioSessionProperty_AudioCategory,
-		sizeof(sessionCategory),
-		&sessionCategory);
-
-	AudioSessionSetActive(true);
+    BOOL success = NO;
+    NSError *error = nil;
+    
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    
+    success = [session setCategory:AVAudioSessionCategoryPlayback error:&error];
+    if (!success) {
+        NSLog(@"%@ Error setting category: %@",
+              NSStringFromSelector(_cmd), [error localizedDescription]);
+        
+        // Exit early
+        return success;
+    }
+    
+    success = [session setActive:YES error:&error];
+    if (!success) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+    
+    return success;
 }
 
-- (void)tearDownAudioSession
+- (BOOL)tearDownAudioSession
 {
-	AudioSessionSetActive(false);
+    NSError *deactivationError = nil;
+    BOOL success = [[AVAudioSession sharedInstance] setActive:NO error:&deactivationError];
+    if (!success) {
+        NSLog(@"%@", [deactivationError localizedDescription]);
+    }
+    return success;
 }
 
 - (void)setUpPlayQueue
@@ -195,6 +205,20 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
 		_gain = gain;
 		AudioQueueSetParameter(_playQueue, kAudioQueueParam_Volume, _gain);
 	}
+}
+
+#pragma mark -
+#pragma mark AVAdudioSessionDelegate methods
+
+- (void)beginInterruption
+{
+    [self tearDownAudio];
+}
+
+- (void)endInterruption
+{
+    [self setUpAudio];
+    [self start];
 }
 
 @end
