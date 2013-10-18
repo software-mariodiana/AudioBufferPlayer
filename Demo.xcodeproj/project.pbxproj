@@ -23,7 +23,6 @@
 		AC1E8F2E180E1FED00CC8BB7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		AC1E8F34180E1FED00CC8BB7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC1E8F32180E1FED00CC8BB7 /* InfoPlist.strings */; };
 		AC1E8F36180E1FED00CC8BB7 /* Demo_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1E8F35180E1FED00CC8BB7 /* Demo_Tests.m */; };
-		AC8AAEBE180DF72200D82DC4 /* Project URL.txt in Resources */ = {isa = PBXBuildFile; fileRef = AC8AAEBD180DF72200D82DC4 /* Project URL.txt */; };
 		AC8B2422180F549700D29386 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC8B2421180F549700D29386 /* AVFoundation.framework */; };
 		ACB15320180E276C00A691D7 /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82409A16849854008016E0 /* DemoViewController.m */; };
 		ACB15321180E276F00A691D7 /* Synth.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82409F16849854008016E0 /* Synth.m */; };
@@ -68,6 +67,7 @@
 		AC1E8F37180E1FED00CC8BB7 /* Demo Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo Tests-Prefix.pch"; sourceTree = "<group>"; };
 		AC8AAEBD180DF72200D82DC4 /* Project URL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Project URL.txt"; sourceTree = "<group>"; };
 		AC8B2421180F549700D29386 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		ACE14B561810B22B00FD3E79 /* iOS7Notes.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = iOS7Notes.md; sourceTree = "<group>"; };
 		ACE7A95F180E146800C51258 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -155,6 +155,7 @@
 				7B82409616849854008016E0 /* Demo_Prefix.pch */,
 				7B82409C16849854008016E0 /* main.m */,
 				AC8AAEBD180DF72200D82DC4 /* Project URL.txt */,
+				ACE14B561810B22B00FD3E79 /* iOS7Notes.md */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -264,7 +265,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC8AAEBE180DF72200D82DC4 /* Project URL.txt in Resources */,
 				7B8240A316849854008016E0 /* DemoViewController.xib in Resources */,
 				7B8240B316849AEF008016E0 /* Default-568h@2x.png in Resources */,
 			);
