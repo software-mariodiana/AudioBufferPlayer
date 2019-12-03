@@ -120,17 +120,12 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
     AVAudioSessionInterruptionType interruption =
         [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] integerValue];
     
-    switch (interruption) {
-        case AVAudioSessionInterruptionTypeBegan:
-            [self tearDownAudio];
-            break;
-        case AVAudioSessionInterruptionTypeEnded:
-            [self setUpAudio];
-            [self start];
-            break;
-        default:
-            NSLog(@"Unrecognized interruption received!");
-            break;
+    if (interruption == AVAudioSessionInterruptionTypeBegan) {
+        [self tearDownAudio];
+    }
+    else if (interruption == AVAudioSessionInterruptionTypeEnded) {
+        [self setUpAudio];
+        [self start];
     }
 }
 

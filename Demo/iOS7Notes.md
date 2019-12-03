@@ -147,7 +147,36 @@ The original C implementation passed that function as Argument 3 of the (now dep
         [self start];
     }
 
+####Update (deprecation removal)####
+
+The above delegate methods have since been deprecated and removed entirely. Interruptions are now communicated via notification. First the method to handle the notification:
+
+    - (void)audioSessionDidReceiveInterruption:(NSNotification *)notification
+    {
+        AVAudioSessionInterruptionType interruption =
+            [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] integerValue];
+        
+        if (interruption == AVAudioSessionInterruptionTypeBegan) {
+            [self tearDownAudio];
+        }
+        else if (interruption == AVAudioSessionInterruptionTypeEnded) {
+            [self setUpAudio];
+            [self start];
+        }
+    }
+
+Register for the notification at the end of the `setUpAudioSession` method:
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(audioSessionDidReceiveInterruption:)
+                                                 name:AVAudioSessionInterruptionNotification
+                                               object:session];
+
+And remove the observer at the start of the `tearDownAudioSession` method:
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 ###Conclusion###
 Build and run the application. It should all work as before. For further reading, see Apple's [*Audio Session Programming Guide.*](https://developer.apple.com/library/ios/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Cookbook/Cookbook.html)
 
-*Copyright © 2013 Mario Diana.*
+*Copyright © 2013, 2019 Mario Diana.*
