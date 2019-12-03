@@ -177,6 +177,6 @@ And remove the observer at the start of the `tearDownAudioSession` method:
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 ###Conclusion###
-Build and run the application. It should all work as before. For further reading, see Apple's [*Audio Session Programming Guide.*](https://developer.apple.com/library/ios/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Cookbook/Cookbook.html)
+Build and run the application. It should all work as before. For further reading, see Apple's [*Audio Session Programming Guide.*](https://developer.apple.com/library/archive/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Introduction/Introduction.html)
 
 *Copyright © 2013, 2019 Mario Diana.*
