@@ -115,6 +115,25 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
 	}
 }
 
+- (void)audioSessionDidReceiveInterruption:(NSNotification *)notification
+{
+    AVAudioSessionInterruptionType interruption =
+        [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] integerValue];
+    
+    switch (interruption) {
+        case AVAudioSessionInterruptionTypeBegan:
+            [self tearDownAudio];
+            break;
+        case AVAudioSessionInterruptionTypeEnded:
+            [self setUpAudio];
+            [self start];
+            break;
+        default:
+            NSLog(@"Unrecognized interruption received!");
+            break;
+    }
+}
+
 - (BOOL)setUpAudioSession
 {
     BOOL success = NO;
@@ -137,11 +156,17 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
               NSStringFromSelector(_cmd), [error localizedDescription]);
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(audioSessionDidReceiveInterruption:)
+                                                 name:AVAudioSessionInterruptionNotification
+                                               object:session];
+    
     return success;
 }
 
 - (BOOL)tearDownAudioSession
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSError *deactivationError = nil;
     BOOL success = [[AVAudioSession sharedInstance] setActive:NO error:&deactivationError];
     if (!success) {
@@ -216,20 +241,6 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
 		_gain = gain;
 		AudioQueueSetParameter(_playQueue, kAudioQueueParam_Volume, _gain);
 	}
-}
-
-#pragma mark -
-#pragma mark AVAdudioSessionDelegate methods
-
-- (void)beginInterruption
-{
-    [self tearDownAudio];
-}
-
-- (void)endInterruption
-{
-    [self setUpAudio];
-    [self start];
 }
 
 @end

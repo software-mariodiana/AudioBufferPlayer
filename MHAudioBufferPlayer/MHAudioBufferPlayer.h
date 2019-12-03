@@ -45,7 +45,7 @@ typedef void (^MHAudioBufferPlayerBlock)(AudioQueueBufferRef buffer, AudioStream
  * Note: The buffers are always assumed to be little-endian (both on simulator
  * and on a device).
  */
-@interface MHAudioBufferPlayer : NSObject <AVAudioSessionDelegate>
+@interface MHAudioBufferPlayer : NSObject
 
 /* The block that fills up the audio buffers. */
 @property (nonatomic, copy) MHAudioBufferPlayerBlock block;

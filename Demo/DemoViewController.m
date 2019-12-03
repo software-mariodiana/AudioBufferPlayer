@@ -19,11 +19,6 @@
 	return self;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-	return toInterfaceOrientation == UIInterfaceOrientationPortrait;
-}
-
 - (void)setUpAudioBufferPlayer
 {
 	// We need a lock because we update the Synth's state from the main thread
@@ -79,8 +74,6 @@
 			[blockSelf->_synthLock unlock];
 		}
 	};
-    
-    [[AVAudioSession sharedInstance] setDelegate:_player];
 
 	[_player start];
 }
@@ -90,7 +83,7 @@
 	[_synthLock lock];
 
 	// The tag of each button corresponds to its MIDI note number.
-	int midiNote = sender.tag;
+	int midiNote = (int)sender.tag;
 	[_synth playNote:midiNote];
 
 	[_synthLock unlock];
@@ -99,7 +92,7 @@
 - (IBAction)keyUp:(UIButton *)sender
 {
 	[_synthLock lock];
-	[_synth releaseNote:sender.tag];
+	[_synth releaseNote:(int)sender.tag];
 	[_synthLock unlock];
 }
 
