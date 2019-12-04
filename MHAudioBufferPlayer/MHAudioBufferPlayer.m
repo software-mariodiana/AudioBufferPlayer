@@ -17,6 +17,7 @@
 
 @interface MHAudioBufferPlayer ()
 
+@property (nonatomic, assign, getter=hasRegisteredForNotification) BOOL registeredForNotification;
 @property (nonatomic, assign, readwrite) BOOL playing;
 
 - (void)setUpAudio;
@@ -68,30 +69,31 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
         packetsPerBuffer:(UInt32)packetsPerBuffer
 {
 	if ((self = [super init]))
-	{
-		_playing = NO;
-		_playQueue = NULL;
-		_gain = 1.0;
-
-		_audioFormat.mFormatID         = kAudioFormatLinearPCM;
-		_audioFormat.mSampleRate       = sampleRate;
-		_audioFormat.mChannelsPerFrame = channels;
-		_audioFormat.mBitsPerChannel   = bitsPerChannel;
-		_audioFormat.mFramesPerPacket  = 1;  // uncompressed audio
-		_audioFormat.mBytesPerFrame    = _audioFormat.mChannelsPerFrame * _audioFormat.mBitsPerChannel/8;
-		_audioFormat.mBytesPerPacket   = _audioFormat.mBytesPerFrame * _audioFormat.mFramesPerPacket;
-		_audioFormat.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
-
-		_packetsPerBuffer = packetsPerBuffer;
-		_bytesPerBuffer = _packetsPerBuffer * _audioFormat.mBytesPerPacket;
-
-		[self setUpAudio];
-	}
+    {
+        _playing = NO;
+        _playQueue = NULL;
+        _gain = 1.0;
+        
+        _audioFormat.mFormatID         = kAudioFormatLinearPCM;
+        _audioFormat.mSampleRate       = sampleRate;
+        _audioFormat.mChannelsPerFrame = channels;
+        _audioFormat.mBitsPerChannel   = bitsPerChannel;
+        _audioFormat.mFramesPerPacket  = 1;  // uncompressed audio
+        _audioFormat.mBytesPerFrame    = _audioFormat.mChannelsPerFrame * _audioFormat.mBitsPerChannel/8;
+        _audioFormat.mBytesPerPacket   = _audioFormat.mBytesPerFrame * _audioFormat.mFramesPerPacket;
+        _audioFormat.mFormatFlags      = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
+        
+        _packetsPerBuffer = packetsPerBuffer;
+        _bytesPerBuffer = _packetsPerBuffer * _audioFormat.mBytesPerPacket;
+        
+        [self setUpAudio];
+    }
 	return self;
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self tearDownAudio];
 }
 
@@ -151,17 +153,20 @@ static void PlayCallback(void *inUserData, AudioQueueRef inAudioQueue, AudioQueu
               NSStringFromSelector(_cmd), [error localizedDescription]);
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(audioSessionDidReceiveInterruption:)
-                                                 name:AVAudioSessionInterruptionNotification
-                                               object:session];
+    if (![self hasRegisteredForNotification]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(audioSessionDidReceiveInterruption:)
+                                                     name:AVAudioSessionInterruptionNotification
+                                                   object:session];
+        
+        self.registeredForNotification = YES;
+    }
     
     return success;
 }
 
 - (BOOL)tearDownAudioSession
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSError *deactivationError = nil;
     BOOL success = [[AVAudioSession sharedInstance] setActive:NO error:&deactivationError];
     if (!success) {
