@@ -1,3 +1,4 @@
+#import <Foundation/Foundation.h>
 
 /*
  * The maximum number of tones that can play simultaneously (polyphony). 

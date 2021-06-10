@@ -1,6 +1,6 @@
 
 #import <AudioToolbox/AudioToolbox.h>
-#import <AVFoundation/AVAudioSession.h>
+#import <AVFoundation/AVFoundation.h>
 
 @class MHAudioBufferPlayer;
 

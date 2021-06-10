@@ -10,13 +10,15 @@
 	NSLock *_synthLock;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+@dynamic gain;
+
+- (void)viewDidLoad
 {
-	if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
-	{
-		[self setUpAudioBufferPlayer];
-	}
-	return self;
+    [super viewDidLoad];
+    // Don't block the UI during player's initialization.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self setUpAudioBufferPlayer];
+    });
 }
 
 - (void)setUpAudioBufferPlayer
@@ -78,22 +80,32 @@
 	[_player start];
 }
 
+- (Float32)gain
+{
+    return [_player gain];
+}
+
+- (void)setGain:(Float32)gain
+{
+    [_player setGain:gain];
+}
+
 - (IBAction)keyDown:(UIButton *)sender
 {
-	[_synthLock lock];
-
-	// The tag of each button corresponds to its MIDI note number.
-	int midiNote = (int)sender.tag;
-	[_synth playNote:midiNote];
-
-	[_synthLock unlock];
+    [_synthLock lock];
+    
+    // The tag of each button corresponds to its MIDI note number.
+    int midiNote = (int)sender.tag;
+    [_synth playNote:midiNote];
+    
+    [_synthLock unlock];
 }
 
 - (IBAction)keyUp:(UIButton *)sender
 {
-	[_synthLock lock];
-	[_synth releaseNote:(int)sender.tag];
-	[_synthLock unlock];
+    [_synthLock lock];
+    [_synth releaseNote:(int)sender.tag];
+    [_synthLock unlock];
 }
 
 @end
