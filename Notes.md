@@ -1,4 +1,4 @@
-# Project updates #
+# Project notes #
 
 ## Re-implementing Audio Sessions in Objective-C ##
 
