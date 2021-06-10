@@ -1,26 +1,28 @@
-##Re-implementing Audio Sessions in Objective-C##
+# Project updates #
 
-###Documentation###
+## Re-implementing Audio Sessions in Objective-C ##
 
-See: "Audio Session Cookbook" from the [*Audio Session Programming Guide*](https://developer.apple.com/library/ios/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Cookbook/Cookbook.html)
+### Documentation ###
 
-###Project###
+See: "Audio Session Cookbook" from the [*Audio Session Programming Guide.*](https://developer.apple.com/library/archive/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Introduction/Introduction.html)
+
+### Project ###
 "AudioBufferPlayer" by Matthijs Hollemans  
 [https://github.com/hollance/AudioBufferPlayer](https://github.com/hollance/AudioBufferPlayer)
 
-###Description###
+### Description ###
 In iOS 7 Apple deprecated several methods from its Audio Session C implementation, methods that dealt with initializing and configuring an application's Audio Session. Apple doesn't offer any substitute methods as part of the in-line popup documentation, because the deprecation doesn't involve merely substituting new methods for old. Rather, the reimplementation takes the older C code system and replaces it with a new system written in Objective-C. 
 
 Since I wasn't able to find any example code, after searching Stack Overflow, I—horror of horrors—was forced to read Apple's documentation. Once I got a handle on Mr. Hollemans' code and found the corresponding section in Apple's documentation that dealt with the Objective-C system's handling of initializing, configuring, and so forth, it wasn't that difficult to figure out how to update the code. 
 
 These notes are meant to document what I learned.
 
-###Preliminaries###
+### Preliminaries ###
 After downloading the project from Github, I followed all of Xcode's recommendations for updating the project, including fixing any ARC requirements.
 
-###Moving to Objective-C###
+### Moving to Objective-C ###
 
-####1. Declarations and a Delegate####
+#### 1. Declarations and a Delegate ####
 
 Apple's new system involves `AVAudioSession`. This requires adding the `AVFoundation` framework and then importing the needed header:
 
@@ -36,7 +38,7 @@ The `MHAudioBufferPlayer` instance is created in the view controller's `setupAud
 
     [[AVAudioSession sharedInstance] setDelegate:_player];
     
-####2. Replacing Deprecated C Functions####
+#### 2. Replacing Deprecated C Functions ####
 
 There were four spots in the original code that were flagged as deprecated. These four spots appeared involved three C functions in all. The three functions were:
 
@@ -114,7 +116,7 @@ The reimplemented `tearDownAudioSession` method is even simpler:
     
 Essentially, we use the same `setActive:error:` method, only passing `NO` to deactivate the session, rather than `YES` to activate it.
 
-####3. Handling Interruptions####
+#### 3. Handling Interruptions ####
 
 The phone can ring, an email can ding, and so forth. Therefore, our application should be able to handle potential interruptions. More or less what goes on is that the phone takes control of the Audio Session, taking it away from us, does whatever it needs to do, and when it's finished hands the Audio Session back to us.
 
@@ -147,7 +149,7 @@ The original C implementation passed that function as Argument 3 of the (now dep
         [self start];
     }
 
-####Update (deprecation removal)####
+#### Update (deprecation removal) ####
 
 The above delegate methods have since been deprecated and removed entirely. Interruptions are now communicated via notification. First the method to handle the notification:
 
@@ -175,8 +177,11 @@ Register for the notification at the end of the `setUpAudioSession` method:
 And remove the observer at the start of the `tearDownAudioSession` method:
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+#### Update (iOS 14) ####
+I got interested in the project again and decided to remove the old Xib file, migrating its view to a storyboard. I removed other Xcode legacy files as well.
 
-###Conclusion###
+### Conclusion ###
 Build and run the application. It should all work as before. For further reading, see Apple's [*Audio Session Programming Guide.*](https://developer.apple.com/library/archive/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Introduction/Introduction.html)
 
-*Copyright © 2013, 2019 Mario Diana.*
+*Copyright © 2013, 2019, 2021 Mario Diana.*
