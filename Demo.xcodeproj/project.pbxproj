@@ -154,8 +154,8 @@
 		ACD331BC2671A194007B3744 /* MHAudioBufferPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				ACD331BD2671A194007B3744 /* MHAudioBufferPlayer.m */,
 				ACD331BE2671A194007B3744 /* MHAudioBufferPlayer.h */,
+				ACD331BD2671A194007B3744 /* MHAudioBufferPlayer.m */,
 			);
 			path = MHAudioBufferPlayer;
 			sourceTree = "<group>";

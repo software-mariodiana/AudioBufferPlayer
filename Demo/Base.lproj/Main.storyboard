@@ -23,17 +23,41 @@
                                     <constraint firstAttribute="height" constant="460" id="K1i-om-4yv"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="YSJ-vQ-8TO" kind="embed" id="AHD-Fd-vtx"/>
+                                    <segue destination="YSJ-vQ-8TO" kind="embed" identifier="DemoViewControllerSegue" id="AHD-Fd-vtx"/>
                                 </connections>
                             </containerView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="GKS-uB-2Ph">
+                                <rect key="frame" x="14" y="616" width="347" height="31"/>
+                                <connections>
+                                    <action selector="captureGain:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="G3J-oO-N8h"/>
+                                    <action selector="captureGain:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S40-jB-yfz"/>
+                                    <action selector="updateGain:" destination="BYZ-38-t0r" eventType="valueChanged" id="300-2h-PRB"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gain: 1.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mx2-Fw-R6m">
+                                <rect key="frame" x="16" y="587" width="344" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Guv-HB-gFl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="4cs-vM-pJz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GKS-uB-2Ph" secondAttribute="trailing" constant="16" id="CWn-FP-Sow"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GKS-uB-2Ph" secondAttribute="bottom" constant="21" id="JAz-Py-ccH"/>
                             <constraint firstItem="Guv-HB-gFl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PZy-hX-dM2"/>
+                            <constraint firstItem="GKS-uB-2Ph" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="WWh-LY-NeD"/>
+                            <constraint firstItem="Mx2-Fw-R6m" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="hQY-wd-6aj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Mx2-Fw-R6m" secondAttribute="trailing" constant="15" id="u5M-wQ-n3L"/>
+                            <constraint firstItem="GKS-uB-2Ph" firstAttribute="top" secondItem="Mx2-Fw-R6m" secondAttribute="bottom" constant="8" symbolic="YES" id="xXb-yt-nfo"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="gainSlider" destination="GKS-uB-2Ph" id="A0C-Pm-ChH"/>
+                        <outlet property="gainValue" destination="Mx2-Fw-R6m" id="tDE-1f-DWx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
